@@ -1,5 +1,16 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
+import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
+  comp: {
+    textAlign: "center",
+    marginTop: "100px"
+  }
+};
 
 class Home extends Component {
   state = {
@@ -41,28 +52,48 @@ class Home extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
-      <form onSubmit={this.submit}>
-        <TextField
-          label="Name"
-          id="std-name"
-          margin="normal"
-          onChange={event => this.change(event, "name")}
-        />
-        <TextField
-          id="desc"
-          label="Description"
-          multiline
-          rowsMax="5"
-          margin="normal"
-          onChange={event => this.change(event, "desc")}
-        />
-        <input type="file" onChange={this.fileChangedHalndler} />
-        <button onClick={this.upload}>Upload</button>
-        <button type="submit">Submit</button>
-      </form>
+      <Grid container>
+        <Grid item sm={4} md={12} className={classes.comp}>
+          <form onSubmit={this.submit} autocomplete="off">
+            <TextField
+              autoFocus
+              label="Name"
+              id="std-name"
+              margin="normal"
+              onChange={event => this.change(event, "name")}
+            />
+            <Grid item sm={4} md={12}>
+              <TextField
+                id="desc"
+                label="Description"
+                multiline
+                rowsMax="5"
+                onChange={event => this.change(event, "desc")}
+              />
+            </Grid>
+            <Grid item sm={4} md={12}>
+              <br />
+              <Input
+                color="primary"
+                type="file"
+                onChange={this.fileChangedHalndler}
+              />
+              <Button variant="contained" color="primary" onClick={this.upload}>
+                Upload
+              </Button>
+            </Grid>
+            <Grid item sm={4} md={12}>
+              <Button variant="contained" color="primary" type="submit">
+                Submit
+              </Button>
+            </Grid>
+          </form>
+        </Grid>
+      </Grid>
     );
   }
 }
 
-export default Home;
+export default withStyles(styles)(Home);
