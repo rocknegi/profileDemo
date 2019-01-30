@@ -9,12 +9,14 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import { Paper } from "@material-ui/core";
 
 const styles = {
   card: {
     maxWidth: 250,
     margin: "20px auto 20px auto",
-    maxHeight: 350
+    maxHeight: 350,
+    textAlign: "center"
   },
   cardMedia: {
     height: 250,
@@ -23,12 +25,18 @@ const styles = {
   text: {
     margin: "20px auto 10px auto",
     textAlign: "center",
-    fontSize: "20px"
+    fontSize: "20px",
+    textAlign: "center"
   }
 };
 class Profile extends Component {
   state = {
-    data: []
+    data: [],
+    descEdit: false,
+    imgEdit: false,
+    fileSelected: null,
+    name: "",
+    description: ""
   };
 
   componentDidMount() {
@@ -40,6 +48,33 @@ class Profile extends Component {
     const { handle } = this.props.match.params;
     console.log("yo", handle);
   }
+
+  change = (event, value) => {
+    this.setState({ [value]: event.target.value });
+  };
+
+  fileChangedHalndler = event => {
+    var file = event.target.files[0];
+    this.getBase64(file).then(base64 => {
+      this.setState({ fileSelected: base64 });
+    });
+    console.log(this.state);
+  };
+
+  getBase64 = file => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  save = event => {
+    event.preventDefault();
+    localStorage.setItem("myData", JSON.stringify(this.state));
+    window.location.reload();
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -48,32 +83,90 @@ class Profile extends Component {
           Profile of {this.state.data.name}
         </Grid>
         <Grid item xs={4} sm={6} md={12}>
-          <Card className={classes.card} raised={true}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.cardMedia}
-                image={this.state.data.fileSelected}
-                title="MyPic"
+          {this.state.imgEdit == false ? (
+            <Card className={classes.card} raised={true}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={this.state.data.fileSelected}
+                  title="MyPic"
+                />
+                <CardContent>
+                  <Typography
+                    gutterBottom
+                    variant="h3"
+                    component="h2"
+                    align="center"
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() =>
+                        this.setState({ imgEdit: !this.state.imgEdit })
+                      }
+                    >
+                      Edit
+                    </Button>
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ) : (
+            <div className={classes.text}>
+              <Input
+                color="primary"
+                type="file"
+                onChange={this.fileChangedHalndler}
               />
-              <CardContent>
-                <Typography
-                  gutterBottom
-                  variant="h3"
-                  component="h2"
-                  align="center"
-                >
-                  <Button cont variant="contained" ained color="primary">
-                    Edit
-                  </Button>
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => this.setState({ imgEdit: !this.state.imgEdit })}
+              >
+                cancel
+              </Button>
+            </div>
+          )}
         </Grid>
         <Grid item className={classes.text}>
-          {this.state.data.desc} <br />
-          <Button variant="contained" color="primary">
-            Edit
+          {this.state.descEdit == false ? (
+            <Paper>
+              <Typography variant="h5">{this.state.data.desc}</Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() =>
+                  this.setState({ descEdit: !this.state.descEdit })
+                }
+              >
+                Edit
+              </Button>
+              <br />
+            </Paper>
+          ) : (
+            <div>
+              <TextField
+                id="desc"
+                label="Description"
+                multiline
+                rowsMax="5"
+                onChange={event => this.change(event, "desc")}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() =>
+                  this.setState({ descEdit: !this.state.descEdit })
+                }
+              >
+                cancel
+              </Button>
+            </div>
+          )}
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} className={classes.text}>
+          <Button variant="contained" color="primary" onClick={this.save}>
+            Save Changes
           </Button>
         </Grid>
       </Grid>
