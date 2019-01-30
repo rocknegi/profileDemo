@@ -7,7 +7,7 @@ class Profile extends Component {
 
   componentDidMount() {
     var arr = localStorage.getItem("myData");
-    console.log(arr);
+    // console.log(arr);
     var temp = JSON.parse(arr);
     this.setState({ data: temp });
     console.log(temp.fileSelected);
@@ -15,7 +15,12 @@ class Profile extends Component {
     console.log("yo", handle);
   }
   render() {
-    return <div>Profile of {this.state.data.name} </div>;
+    return (
+      <div>
+        Profile of {this.state.data.name}
+        <img src={this.state.data.fileSelected} />
+      </div>
+    );
   }
 }
 

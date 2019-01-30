@@ -8,10 +8,21 @@ class Home extends Component {
     description: ""
   };
   fileChangedHalndler = event => {
-    this.setState({ fileSelected: event.target.files[0] });
+    var file = event.target.files[0];
+    this.getBase64(file).then(base64 => {
+      this.setState({ fileSelected: base64 });
+    });
     console.log(this.state);
   };
 
+  getBase64 = file => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+      reader.readAsDataURL(file);
+    });
+  };
   upload = () => {
     console.log(this.state.fileSelected.name);
     console.log(this.state);
