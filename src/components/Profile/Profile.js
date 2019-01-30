@@ -5,11 +5,9 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import { Paper } from "@material-ui/core";
 
 const styles = {
   card: {
@@ -25,8 +23,7 @@ const styles = {
   text: {
     margin: "20px auto 10px auto",
     textAlign: "center",
-    fontSize: "20px",
-    textAlign: "center"
+    fontSize: "20px"
   }
 };
 class Profile extends Component {
@@ -83,7 +80,7 @@ class Profile extends Component {
           Profile of {this.state.data.name}
         </Grid>
         <Grid item xs={4} sm={6} md={12}>
-          {this.state.imgEdit == false ? (
+          {this.state.imgEdit === false ? (
             <Card className={classes.card} raised={true}>
               <CardActionArea>
                 <CardMedia
@@ -91,25 +88,15 @@ class Profile extends Component {
                   image={this.state.data.fileSelected}
                   title="MyPic"
                 />
-                <CardContent>
-                  <Typography
-                    gutterBottom
-                    variant="h3"
-                    component="h2"
-                    align="center"
-                  >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() =>
-                        this.setState({ imgEdit: !this.state.imgEdit })
-                      }
-                    >
-                      Edit
-                    </Button>
-                  </Typography>
-                </CardContent>
               </CardActionArea>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ marginBottom: "10px" }}
+                onClick={() => this.setState({ imgEdit: !this.state.imgEdit })}
+              >
+                Edit
+              </Button>
             </Card>
           ) : (
             <div className={classes.text}>
@@ -129,9 +116,11 @@ class Profile extends Component {
           )}
         </Grid>
         <Grid item className={classes.text}>
-          {this.state.descEdit == false ? (
-            <Paper>
+          {this.state.descEdit === false ? (
+            <div>
               <Typography variant="h5">{this.state.data.desc}</Typography>
+
+              <br />
               <Button
                 variant="contained"
                 color="primary"
@@ -141,8 +130,7 @@ class Profile extends Component {
               >
                 Edit
               </Button>
-              <br />
-            </Paper>
+            </div>
           ) : (
             <div>
               <TextField

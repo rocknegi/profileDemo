@@ -4,11 +4,14 @@ import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 
 const styles = {
   comp: {
     textAlign: "center",
-    marginTop: "100px"
+    marginTop: "10px"
   }
 };
 
@@ -54,43 +57,53 @@ class Home extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Grid container>
-        <Grid item sm={4} md={12} className={classes.comp}>
-          <form onSubmit={this.submit} autocomplete="off">
-            <TextField
-              autoFocus
-              label="Name"
-              id="std-name"
-              margin="normal"
-              onChange={event => this.change(event, "name")}
-            />
-            <Grid item sm={4} md={12}>
-              <TextField
-                id="desc"
-                label="Description"
-                multiline
-                rowsMax="5"
-                onChange={event => this.change(event, "desc")}
-              />
-            </Grid>
-            <Grid item sm={4} md={12}>
-              <br />
-              <Input
-                color="primary"
-                type="file"
-                onChange={this.fileChangedHalndler}
-              />
-              <Button variant="contained" color="primary" onClick={this.upload}>
-                Upload
-              </Button>
-            </Grid>
-            <Grid item sm={4} md={12}>
-              <Button variant="contained" color="primary" type="submit">
-                Submit
-              </Button>
-            </Grid>
-          </form>
-        </Grid>
+      <Grid container style={{ background: "#265f82" }}>
+        <Card raised={true} style={{ margin: "150px auto 100% auto" }}>
+          <CardContent>
+            <Typography gutterBottom variant="h3" component="h2" align="center">
+              <Grid item sm={4} md={12} className={classes.comp}>
+                <form onSubmit={this.submit} autoComplete="off">
+                  <TextField
+                    autoFocus
+                    label="Name"
+                    id="std-name"
+                    margin="normal"
+                    onChange={event => this.change(event, "name")}
+                  />
+                  <Grid item sm={4} md={12}>
+                    <TextField
+                      id="desc"
+                      label="Description"
+                      multiline
+                      rowsMax="5"
+                      onChange={event => this.change(event, "desc")}
+                    />
+                  </Grid>
+                  <Grid item sm={4} md={12}>
+                    <br />
+                    <Input
+                      color="primary"
+                      type="file"
+                      onChange={this.fileChangedHalndler}
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.upload}
+                    >
+                      Upload
+                    </Button>
+                  </Grid>
+                  <Grid item sm={4} md={12}>
+                    <Button variant="contained" color="primary" type="submit">
+                      Submit
+                    </Button>
+                  </Grid>
+                </form>
+              </Grid>
+            </Typography>
+          </CardContent>
+        </Card>
       </Grid>
     );
   }
