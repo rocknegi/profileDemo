@@ -9,10 +9,12 @@ class Home extends Component {
   };
   fileChangedHalndler = event => {
     this.setState({ fileSelected: event.target.files[0] });
+    console.log(this.state);
   };
 
   upload = () => {
-    console.log(this.state.fileSelected);
+    console.log(this.state.fileSelected.name);
+    console.log(this.state);
   };
 
   submit = event => {
@@ -45,6 +47,7 @@ class Home extends Component {
           onChange={event => this.change(event, "desc")}
         />
         <input type="file" onChange={this.fileChangedHalndler} />
+        <button onClick={this.upload}>Upload</button>
         <button type="submit">Submit</button>
       </form>
     );
