@@ -45,8 +45,8 @@ class Home extends Component {
   submit = event => {
     event.preventDefault();
     localStorage.setItem("myData", JSON.stringify(this.state));
-    // console.log(arr);
-    // console.log(this.state);
+    console.log(arr);
+    console.log(this.state);
     var route = this.state.name.replace(/\s+/g, "");
     this.props.history.push(`/${route}`);
   };

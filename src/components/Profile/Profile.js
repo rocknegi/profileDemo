@@ -41,6 +41,7 @@ class Profile extends Component {
     // console.log(arr);
     var temp = JSON.parse(arr);
     this.setState({ data: temp });
+    this.setState({ name: temp.name });
     console.log(temp.fileSelected);
     const { handle } = this.props.match.params;
     console.log("yo", handle);
@@ -77,7 +78,7 @@ class Profile extends Component {
     return (
       <Grid container>
         <Grid item xs={4} sm={6} md={12} className={classes.text}>
-          Profile of {this.state.data.name}
+          Profile of {this.state.name}
         </Grid>
         <Grid item xs={4} sm={6} md={12}>
           {this.state.imgEdit === false ? (
@@ -153,9 +154,11 @@ class Profile extends Component {
           )}
         </Grid>
         <Grid item xs={12} sm={12} md={12} className={classes.text}>
-          <Button variant="contained" color="primary" onClick={this.save}>
-            Save Changes
-          </Button>
+          {this.state.descEdit || this.state.imgEdit ? (
+            <Button variant="contained" color="primary" onClick={this.save}>
+              Save Changes
+            </Button>
+          ) : null}
         </Grid>
       </Grid>
     );

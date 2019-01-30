@@ -9,7 +9,6 @@ const App = () => {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/:handle" exact component={Profile} />
-        {/* <Route path={"/" + name} exact component={Profile} /> */}
       </Switch>
     </BrowserRouter>
   );
